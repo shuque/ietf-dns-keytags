@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE rfc>
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<!-- used by XSLT processors -->
+<!-- For a complete list and description of processing instructions (PIs),
+     please see http://xml.resource.org/authoring/README.html. -->
+<!-- Below are generally applicable Processing Instructions (PIs) that most I-Ds might want to use.
+     (Here they are set differently than their defaults in xml2rfc v1.32) -->
+<?rfc strict="yes" ?>
+<!-- give errors regarding ID-nits and DTD validation -->
+<!-- control the table of contents (ToC) -->
+<?rfc toc="yes"?>
+<!-- generate a ToC -->
+<?rfc tocdepth="4"?>
+<!-- the number of levels of subsections in ToC. default: 3 -->
+<!-- control references -->
+<?rfc symrefs="yes"?>
+<!-- use symbolic references tags, i.e, [RFC2119] instead of [1] -->
+<?rfc sortrefs="yes" ?>
+<!-- sort the reference entries alphabetically -->
+<!-- control vertical white space
+     (using these PIs as follows is recommended by the RFC Editor) -->
+<?rfc compact="yes" ?>
+<!-- do not start each main section on a new page -->
+<?rfc subcompact="no" ?>
+<!-- keep one blank line between list items -->
+<!-- end of list of popular I-D processing instructions -->
+
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude"
+        category="std" consensus="true"
+        docName="draft-huque-dnsop-keytags-00"
+        ipr="trust200902" updates="4034,4035" obsoletes=""
+        submissionType="IETF" xml:lang="en"
+        tocInclude="true" tocDepth="4"
+        symRefs="true" sortRefs="true" version="3">
+
+  <!-- ***** FRONT MATTER ***** -->
+
+  <front>
+
+    <title abbrev="DNS Greasing">
+       Collision Free Keytags for DNSSEC
+    </title>
+    <seriesInfo name="Internet-Draft" value="draft-huque-dnsop-keytags"/>
+
+    <author fullname="Mark Andrews" initials="M." surname="Andrews">
+      <organization>Internet Systems Consortium</organization>
+      <address>
+        <email>marka@isc.org</email>
+      </address>
+    </author>
+
+    <author fullname="Shumon Huque" initials="S." surname="Huque">
+      <organization>Salesforce</organization>
+      <address>
+        <email>shuque@gmail.com</email>
+      </address>
+    </author>
+
+    <author fullname="Elias Heftrig" initials="E." surname="Heftrig">
+      <organization>Fraunhofer Institute</organization>
+      <address>
+        <email>elias.heftrig@sit.fraunhofer.de</email>
+      </address>
+    </author>
+
+    <date day="24" month="7" year="2024"/>
+    <!-- Meta-data Declarations -->
+
+    <area>General</area>
+    <workgroup>Internet Engineering Task Force</workgroup>
+    <keyword>Internet-Draft</keyword>
+    <keyword>DNS</keyword>
+    <keyword>DNSSEC</keyword>
+    <keyword>Keytag</keyword>
+    <keyword>Collision Free</keyword>
+
+    <abstract>
+     <t>
+        DNSSEC employs a Key Tag field in the RRSIG and DS resource
+        records in order to efficiently identify the key that produced
+        a DNSSEC signature and the key that should be used as secure
+        entry point into a delegated zone. The Key Tag was not intended
+        to be a unique identifier. Key tag collisions can occur in practice
+        for keys in the same zone, though they are relatively rare in
+        normal operation. Colliding key tags impose additional work on a
+        validating resolver, which then has to check signatures for
+        each of the candidate set of keys identified by the Key Tag.
+        Furthermore, they open up resolvers to computational denial of
+        service attacks by adversaries deploying specially crafted
+        zones with many intentionally colliding key tags. This document
+        specifies updates to the DNSSEC protocol and the process of
+        key generation to avoid colliding keys and enforce the
+        uniqueness of key tags.
+     </t>
+    </abstract>
+
+    <note removeInRFC="true">
+       <name>Discussion Venues</name>
+       <t>Source for this draft and an issue tracker can be found at
+       <eref target="https://github.com/shuque/ietf-dns-keytags"/>.</t>
+    </note>
+
+  </front>
+
+  <middle>
+
+    <section anchor="intro" numbered="true" toc="default">
+      <name>Introduction</name>
+      <t>
+        DNSSEC <xref target="RFC4033" /> <xref target="RFC4034" />
+        <xref target="RFC4035" />
+        employs a Key Tag field in the RRSIG and DS resource
+        records in order to efficiently identify the key that produced
+        a DNSSEC signature the key that should be used as secure
+        entry point into a delegated zone. The Key Tag was not intended
+        to be a unique identifier. Key tag collisions can occur in practice
+        for keys in the same zone, though they are relatively rare in
+        normal operation. Colliding key tags impose additional work on a
+        validating resolver, which then has to check signatures for
+        each of the candidate set of keys identified by the Key Tag.
+        Furthermore, they open up resolvers to computational denial of
+        service attacks by adversaries deploying specially crafted
+        zones with many intentionally colliding key tags
+        <xref target="KEYTRAP" />.
+        This document
+        specifies updates to the DNSSEC protocol and the process of
+        key generation to avoid colliding keys and enforce the
+        uniqueness of key tags.
+      </t>
+    </section>
+
+    <section anchor="background" numbered="true" toc="default">
+      <name>Protocol Behavior</name>
+        <ul>
+        <li>New DNSKEY algorithms MUST have DNSKEY RRsets that do not have
+colliding key tags</li>
+        <li>What about existing algorithms? Should we have new aliases for existing algorithms that allow us to incorporate the non collision requirement?</li>
+        <li>Can we propose a future flag date after which existing algorithms will be required to enforce this requirement?</li>
+        <li>Outline the general process by which key generation software should ensure uniqueness of keytags.</li>
+        <li>Special considerations for multi-signer configurations, where multiple distinct parties generate their own keys for the same zone (i) partition the keytag space between each signer/provider, and have each provider re-generate keys if necessary until they obtain one whose keytag is contained in their partition (ii) Use a central key broker to enforce keytag uniqueness, (iii) each signer when generating new keys, queries all DNSKEYs in the multi-signer group to avoid colliding keys. To avoid race conditions, ideally the providers should not generate keys at the same time, and plausibly the zone owner could enforce non-conflicting key generation schedules across the multi-signer group.</li>
+        <li>Describe what to do when a validator encounters a zone with both old and new DNSKEY algorithm numbers.</li>
+        <li>For possible discussion: recommend the use DNS cookies to avoid offpath computational DoS attacks.</li>
+        </ul>
+    </section>
+
+      
+    <section anchor="updates" numbered="true" toc="default">
+      <name>Updates to RFCs</name>
+      <t>
+        TBD
+      </t>
+    </section>
+
+    <section anchor="security" numbered="true" toc="default">
+      <name>Security Considerations</name>
+      <t>
+        Lorem ipsum.
+      </t>
+    </section>
+
+    <section anchor="iana" numbered="true" toc="default">
+      <name>IANA Considerations</name>
+      <t>
+        Lorem ipsum.
+      </t>
+    </section>
+
+  </middle>
+
+  <!--  *****BACK MATTER ***** -->
+
+  <back>
+
+    <references>
+      <name>References</name>
+      <references>
+        <name>Normative References</name>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4033.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4034.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4035.xml"/>
+      </references>
+      <references>
+        <name>Informative References</name>
+        <reference anchor="KEYTRAP"
+                 target="https://www.athene-center.de/fileadmin/content/PDF/Keytrap_2401.pdf">
+          <front>
+            <title>The KeyTrap Denial-of-Service Algorithmic Complexity Attacks on DNS</title>
+            <author fullname="Elias Heftrig" surname="Heftrig" />
+            <author fullname="Haya Schulmann" surname="Schulmann" />
+            <author fullname="Niklas Vogel" surname="Vogel" />
+            <author fullname="Michael Waidner" surname="Waidner" />
+            <date />
+          </front>
+      </reference>
+      </references>
+    </references>
+
+  </back>
+
+</rfc>
