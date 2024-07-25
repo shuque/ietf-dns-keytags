@@ -43,7 +43,7 @@
     <title abbrev="DNS Greasing">
        Collision Free Keytags for DNSSEC
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-huque-dnsop-keytags"/>
+    <seriesInfo name="Internet-Draft" value="draft-huque-dnsop-keytags-00"/>
 
     <author fullname="Mark Andrews" initials="M." surname="Andrews">
       <organization>Internet Systems Consortium</organization>
