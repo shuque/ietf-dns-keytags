@@ -140,7 +140,7 @@ colliding key tags</li>
         <li>What about existing algorithms? Should we have new aliases for existing algorithms that allow us to incorporate the non collision requirement?</li>
         <li>Can we propose a future flag date after which existing algorithms will be required to enforce this requirement?</li>
         <li>Outline the general process by which key generation software should ensure uniqueness of keytags.</li>
-        <li>Special considerations for multi-signer configurations, where multiple distinct parties generate their own keys for the same zone (i) partition the keytag space between each signer/provider, and have each provider re-generate keys if necessary until they obtain one whose keytag is contained in their partition (ii) Use a central key broker to enforce keytag uniqueness, (iii) each signer when generating new keys, queries all DNSKEYs in the multi-signer group to avoid colliding keys. To avoid race conditions, ideally the providers should not generate keys at the same time, and plausibly the zone owner could enforce non-conflicting key generation schedules across the multi-signer group.</li>
+        <li>Special considerations for multi-signer <xref target="RFC8901" /> configurations, where multiple distinct parties generate their own keys for the same zone (i) partition the keytag space between each signer/provider, and have each provider re-generate keys if necessary until they obtain one whose keytag is contained in their partition (ii) Use a central key broker to enforce keytag uniqueness, (iii) each signer when generating new keys, queries all DNSKEYs in the multi-signer group to avoid colliding keys. To avoid race conditions, ideally the providers should not generate keys at the same time, and plausibly the zone owner could enforce non-conflicting key generation schedules across the multi-signer group.</li>
         <li>Describe what to do when a validator encounters a zone with both old and new DNSKEY algorithm numbers.</li>
         <li>For possible discussion: recommend the use DNS cookies to avoid offpath computational DoS attacks.</li>
         </ul>
@@ -181,6 +181,7 @@ colliding key tags</li>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4033.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4034.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4035.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8901.xml"/>
       </references>
       <references>
         <name>Informative References</name>

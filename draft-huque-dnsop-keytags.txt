@@ -86,7 +86,7 @@ Table of Contents
    3.  Updates to RFCs . . . . . . . . . . . . . . . . . . . . . . .   3
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   3
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   3
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      6.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
      6.2.  Informative References  . . . . . . . . . . . . . . . . .   4
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
@@ -131,17 +131,18 @@ Internet-Draft                DNS Greasing                     July 2024
    *  Outline the general process by which key generation software
       should ensure uniqueness of keytags.
 
-   *  Special considerations for multi-signer configurations, where
-      multiple distinct parties generate their own keys for the same
-      zone (i) partition the keytag space between each signer/provider,
-      and have each provider re-generate keys if necessary until they
-      obtain one whose keytag is contained in their partition (ii) Use a
-      central key broker to enforce keytag uniqueness, (iii) each signer
-      when generating new keys, queries all DNSKEYs in the multi-signer
-      group to avoid colliding keys.  To avoid race conditions, ideally
-      the providers should not generate keys at the same time, and
-      plausibly the zone owner could enforce non-conflicting key
-      generation schedules across the multi-signer group.
+   *  Special considerations for multi-signer [RFC8901] configurations,
+      where multiple distinct parties generate their own keys for the
+      same zone (i) partition the keytag space between each signer/
+      provider, and have each provider re-generate keys if necessary
+      until they obtain one whose keytag is contained in their partition
+      (ii) Use a central key broker to enforce keytag uniqueness, (iii)
+      each signer when generating new keys, queries all DNSKEYs in the
+      multi-signer group to avoid colliding keys.  To avoid race
+      conditions, ideally the providers should not generate keys at the
+      same time, and plausibly the zone owner could enforce non-
+      conflicting key generation schedules across the multi-signer
+      group.
 
    *  Describe what to do when a validator encounters a zone with both
       old and new DNSKEY algorithm numbers.
@@ -161,7 +162,6 @@ Internet-Draft                DNS Greasing                     July 2024
 
    Lorem ipsum.
 
-6.  References
 
 
 
@@ -169,6 +169,8 @@ Andrews, et al.          Expires 25 January 2025                [Page 3]
 
 Internet-Draft                DNS Greasing                     July 2024
 
+
+6.  References
 
 6.1.  Normative References
 
@@ -186,6 +188,11 @@ Internet-Draft                DNS Greasing                     July 2024
               Rose, "Protocol Modifications for the DNS Security
               Extensions", RFC 4035, DOI 10.17487/RFC4035, March 2005,
               <https://www.rfc-editor.org/info/rfc4035>.
+
+   [RFC8901]  Huque, S., Aras, P., Dickinson, J., Vcelak, J., and D.
+              Blacka, "Multi-Signer DNSSEC Models", RFC 8901,
+              DOI 10.17487/RFC8901, September 2020,
+              <https://www.rfc-editor.org/info/rfc8901>.
 
 6.2.  Informative References
 
@@ -209,13 +216,6 @@ Authors' Addresses
    Elias Heftrig
    Fraunhofer Institute
    Email: elias.heftrig@sit.fraunhofer.de
-
-
-
-
-
-
-
 
 
 
