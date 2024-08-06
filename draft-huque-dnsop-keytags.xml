@@ -30,7 +30,7 @@
 
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude"
         category="std" consensus="true"
-        docName="draft-huque-dnsop-keytags-00"
+        docName="draft-huque-dnsop-keytags-01"
         ipr="trust200902" updates="4034,4035" obsoletes=""
         submissionType="IETF" xml:lang="en"
         tocInclude="true" tocDepth="4"
@@ -43,7 +43,7 @@
     <title abbrev="DNS Greasing">
        Collision Free Keytags for DNSSEC
     </title>
-    <seriesInfo name="Internet-Draft" value="draft-huque-dnsop-keytags-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-huque-dnsop-keytags-01"/>
 
     <author fullname="Mark Andrews" initials="M." surname="Andrews">
       <organization>Internet Systems Consortium</organization>
@@ -59,14 +59,7 @@
       </address>
     </author>
 
-    <author fullname="Elias Heftrig" initials="E." surname="Heftrig">
-      <organization>Fraunhofer Institute</organization>
-      <address>
-        <email>elias.heftrig@sit.fraunhofer.de</email>
-      </address>
-    </author>
-
-    <date day="24" month="7" year="2024"/>
+    <date day="5" month="8" year="2024"/>
     <!-- Meta-data Declarations -->
 
     <area>General</area>
